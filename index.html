@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signup Page</title>
+  <title>Signup Step 1</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,13 +24,7 @@
       max-width: 400px;
     }
 
-    .signup-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .signup-container input {
+    input, button {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
@@ -39,23 +33,19 @@
       font-size: 16px;
     }
 
-    .signup-container button {
-      width: 100%;
-      padding: 12px;
+    button {
       background: #007bff;
-      color: #fff;
-      font-size: 16px;
+      color: white;
       border: none;
-      border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
 
-    .signup-container button:hover {
+    button:hover {
       background: #0056b3;
     }
 
-    .signup-container .error {
+    .error {
       color: red;
       font-size: 14px;
       margin-top: -5px;
@@ -64,44 +54,36 @@
 </head>
 <body>
   <div class="signup-container">
-    <h2>Sign Up</h2>
-    <form id="signupForm">
+    <h2>Sign Up - Step 1</h2>
+    <form id="step1Form">
       <input type="text" id="username" placeholder="Username" required>
       <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
       <div id="errorMsg" class="error"></div>
-      <button type="submit">Sign Up</button>
+      <button type="submit">Next</button>
     </form>
   </div>
 
   <script>
-    const form = document.getElementById('signupForm');
+    const form = document.getElementById('step1Form');
     const errorMsg = document.getElementById('errorMsg');
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // prevent actual form submission
+      e.preventDefault();
 
       const username = document.getElementById('username').value.trim();
       const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
 
-      // Basic validation
-      if(username === "" || email === "" || password === "") {
+      if(username === "" || email === "") {
         errorMsg.textContent = "All fields are required!";
         return;
       }
 
-      if(password.length < 6) {
-        errorMsg.textContent = "Password must be at least 6 characters!";
-        return;
-      }
+      // Save data to localStorage to use in step 2
+      localStorage.setItem('signupUsername', username);
+      localStorage.setItem('signupEmail', email);
 
-      errorMsg.textContent = "";
-      alert(`Welcome ${username}! Signup successful.`);
-
-      // Here you can send data to backend via fetch/ajax
-      // fetch('/signup', {method:'POST', body: JSON.stringify({username, email, password})})
-      form.reset();
+      // Go to Step 2 page
+      window.location.href = "step2.html";
     });
   </script>
 </body>
