@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Step 2</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .signup-container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #1e7e34;
+    }
+
+    .info {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Sign Up - Step 2</h2>
+    <div class="info" id="userInfo"></div>
+    <form id="step2Form">
+      <input type="password" id="password" placeholder="Create Password" required>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+      <div id="errorMsg" class="error"></div>
+      <button type="submit">Finish Signup</button>
+    </form>
+  </div>
+
+  <script>
+    const userInfo = document.getElementById('userInfo');
+    const form = document.getElementById('step2Form');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Get username and email from localStorage
+    const username = localStorage.getItem('signupUsername') || 'User';
+    const email = localStorage.getItem('signupEmail') || '';
+
+    userInfo.textContent = `Signing up as: ${username} (${email})`;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const password = document.getElementById('password').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+      if(password.length < 6) {
+        errorMsg.textContent = "Password must be at least 6 characters!";
+        return;
+      }
+
+      if(password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match!";
+        return;
+      }
+
+      errorMsg.textContent = "";
+      alert(`Signup successful! Welcome, ${username}`);
+
+      // Clear localStorage
+      localStorage.removeItem('signupUsername');
+      localStorage.removeItem('signupEmail');
+
+      // Redirect to home page or dashboard
+      window.location.href = "home.html"; // change as needed
+    });
+  </script>
+</body>
+</html>
